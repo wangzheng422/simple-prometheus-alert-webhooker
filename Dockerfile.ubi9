@@ -2,8 +2,9 @@
 FROM registry.access.redhat.com/ubi9
 
 # Install Python 3
-RUN yum install -y python311 && \
-    yum clean all
+RUN dnf update -y && \
+    dnf install -y python311 /usr/bin/pip-3.11 && \
+    dnf clean all
 
 # Set the working directory in the container
 WORKDIR /app
