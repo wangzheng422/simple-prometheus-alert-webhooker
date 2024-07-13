@@ -1,0 +1,21 @@
+# Use Red Hat Universal Base Image 9 as the base image
+FROM registry.access.redhat.com/ubi9
+
+# Install Python 3
+RUN yum install -y python311 && \
+    yum clean all
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the Python script into the container
+COPY alertmanager.py /app
+
+# Install Flask
+RUN python3.11 -m pip install Flask
+
+# Expose the port the application listens on
+EXPOSE 5000
+
+# Command to run the application
+CMD ["python3.11", "alertmanager.py"]
