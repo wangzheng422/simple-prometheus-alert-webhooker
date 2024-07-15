@@ -19,4 +19,11 @@ RUN python3.11 -m pip install Flask
 EXPOSE 5000
 
 # Command to run the application
-CMD ["python3.11", "alertmanager.py"]
+# CMD ["python3.11", "alertmanager.py"]
+
+# Define environment variable
+ENV FLASK_APP=alertmanager.py
+ENV PYTHONUNBUFFERED=1
+
+# Run simple-token-implement.py when the container launches
+CMD ["flask", "run", "--host=0.0.0.0"]
