@@ -1,0 +1,29 @@
+# Use Red Hat Universal Base Image 9 as the base image
+FROM registry.redhat.io/openshift4/ose-cli:v4.15
+
+# Install Python 3
+RUN dnf update -y && \
+    dnf install -y python311 /usr/bin/pip-3.11 && \
+    dnf clean all
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the Python script into the container
+COPY alertmanager.py /app
+
+# Install Flask
+RUN python3.11 -m pip install Flask
+
+# Expose the port the application listens on
+EXPOSE 5000
+
+# Command to run the application
+# CMD ["python3.11", "alertmanager.py"]
+
+# Define environment variable
+ENV FLASK_APP=alertmanager.py
+ENV PYTHONUNBUFFERED=1
+
+# Run simple-token-implement.py when the container launches
+CMD ["flask", "run", "--host=0.0.0.0"]
